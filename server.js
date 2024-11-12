@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 
 app.use(cors()); // Enable CORS
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.json());
 
 app.post('/create-checkout-session', async (req, res) => {
@@ -25,8 +25,8 @@ app.post('/create-checkout-session', async (req, res) => {
 });
 
 // Serve the index.html file for the root path
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // Use the PORT environment variable provided by Heroku
