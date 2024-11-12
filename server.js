@@ -1,6 +1,7 @@
 const express = require('express');
 const stripe = require('stripe')('sk_test_51JprSpH6YrdtkYECuPCY9zC2NFGRYuEBZLes9paj0cRrjSoMTAi1nX3lBYgzsaH7kxeT8KAFZUE3EG18CdJPE4Xq00gC0QbE7Y');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 
 app.use(cors()); // Enable CORS
@@ -23,9 +24,9 @@ app.post('/create-checkout-session', async (req, res) => {
     res.json({ id: session.id });
 });
 
-// Add a route for the root path
+// Serve the index.html file for the root path
 app.get('/', (req, res) => {
-    res.send('Welcome to the Tunerr API');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Use the PORT environment variable provided by Heroku
