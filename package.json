@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "start": "node server.js",
+    "heroku-postbuild": "vite build"
   },
   "devDependencies": {
     "vite": "^5.3.3",

@@ -28,17 +28,16 @@ export default class RightBar {
             return;
         }
 
-
         // Fill cart with selected pieces
         const lineItems = [];
-        for(let i = 0; i < this.selectedPieces.length; i++){
+        for (let i = 0; i < this.selectedPieces.length; i++) {
             lineItems.push({ price: this.selectedPieces[i].price_id, quantity: 1 });
         }
         
-        console.log(lineItems);
+        // Use environment variable for API endpoint
+        const apiEndpoint = process.env.API_ENDPOINT || 'http://localhost:3000';
 
-
-        const response = await fetch('http://localhost:3000/create-checkout-session', {
+        const response = await fetch(`${apiEndpoint}/create-checkout-session`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,7 +77,7 @@ export default class RightBar {
         this.selectedPieces.forEach(piece => {
             total += piece.price;
         });
-        return total.toFixed(2);
+        return total;
     }
 
     deleteRightBar() {
