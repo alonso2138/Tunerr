@@ -23,6 +23,11 @@ app.post('/create-checkout-session', async (req, res) => {
     res.json({ id: session.id });
 });
 
+// Add a route for the root path
+app.get('/', (req, res) => {
+    res.send('Welcome to the Tunerr API');
+});
+
 // Use the PORT environment variable provided by Heroku
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
