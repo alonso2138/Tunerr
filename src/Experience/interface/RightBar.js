@@ -33,31 +33,39 @@ export default class RightBar {
         for (let i = 0; i < this.selectedPieces.length; i++) {
             lineItems.push({ price: this.selectedPieces[i].price_id, quantity: 1 });
         }
-        
+
         // Use environment variable for API endpoint
-        const apiEndpoint = process.env.API_ENDPOINT || 'http://localhost:3000';
+        const apiEndpoint = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:3000';
 
-        const response = await fetch(`${apiEndpoint}/create-checkout-session`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(lineItems)
-        });
-        const session = await response.json();
+        try {
+            const response = await fetch(`${apiEndpoint}/create-checkout-session`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(lineItems)
+            });
 
-        const { error } = await this.stripe.redirectToCheckout({
-            sessionId: session.id,
-        });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
 
-        if (error) {
-            console.error('Error:', error);
+            const session = await response.json();
+
+            const { error } = await this.stripe.redirectToCheckout({
+                sessionId: session.id,
+            });
+
+            if (error) {
+                console.error('Error:', error);
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
         }
     }
 
     toggleRightBar() {
-        
-        //Notification
+        // Notification
         document.getElementById('notification').style.display = 'none';
 
         this.isOpen = !this.isOpen;
