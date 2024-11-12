@@ -35,7 +35,8 @@ export default class RightBar {
         }
 
         // Use environment variable for API endpoint
-        const apiEndpoint = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:3000';
+        const apiEndpoint = 'https://tunerr-17802672a424.herokuapp.com' 
+        //|| 'http://localhost:3000';
 
         try {
             const response = await fetch(`${apiEndpoint}/create-checkout-session`, {
